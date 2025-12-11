@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ถามหน่อย...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Mali', cursive;
+            background-color: #ffebee; /* ชมพูพาสเทล */
+            background-image: radial-gradient(#f48fb1 2px, transparent 2px);
+            background-size: 25px 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .box {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.15);
+            max-width: 90%;
+            width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 20; /* ให้กล่องอยู่บนสุด */
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 1.8rem;
+            margin: 15px 0;
+        }
+
+        img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 15px;
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap; 
+            position: relative;
+        }
+
+        button {
+            font-family: 'Mali', cursive;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap; /* ห้ามตัดคำ */
+        }
+
+        .btn-primary {
+            background-color: #ff4081;
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(255, 64, 129, 0.3);
+            z-index: 100; /* ปุ่ม Yes ต้องอยู่บนสุดเสมอ */
+        }
+
+        .btn-secondary {
+            background-color: #bdbdbd;
+            color: #333;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+        }
+
+        /* สำหรับซ่อนหน้า */
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="box">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3R6eW54cnk2eGRuNXEzNm13cnF6eXJ6eW54cnk2eGRuNXEzNm13ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LpDmM2wSt6Hm5fKJVa/giphy.gif" alt="Cute Hello">
+        <h1>เค้ามีไรจะถาม... 👉👈</h1>
+        <button class="btn-primary" onclick="showPage2()">ว่ามาสิ</button>
+    </div>
+
+    <div id="page2" class="box hidden">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJ6eW54cnk2eGRuNXEzNm13cnF6eXJ6eW54cnk2eGRuNXEzNm13ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/CjmvTCZf2U3p09Cn0h/giphy.gif" alt="Please">
+        <h1>เป็นแฟนกันนะ? 🥺</h1>
+        <div class="btn-group">
+            <button id="yesBtn" class="btn-primary" onclick="showPage3()">ตกลง</button>
+            <button id="noBtn" class="btn-secondary" onclick="growYes()">ไม่เอา</button>
+        </div>
+    </div>
+
+    <div id="page3" class="box hidden">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHJ6eW54cnk2eGRuNXEzNm13cnF6eXJ6eW54cnk2eGRuNXEzNm13ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/26FLdmIp6wJr91JAI/giphy.gif" alt="Love You">
+        <h1 style="font-size: 2.5rem;">เย้! รักนะค้าบบบ ❤️</h1>
+        <p>ขอบคุณที่เป็นแฟนกันนะ</p>
+    </div>
+
+    <script>
+        let yesSize = 1.2; 
+        let clickCount = 0; 
+
+        // คำพูดตื๊อแบบจัดเต็ม
+        const noTexts = [
+            "ไม่เอา", 
+            "แน่ใจหรอ?", 
+            "คิดดีๆ อีกทีซิ", 
+            "อย่าเพิ่งรีบตอบสิ", 
+            "ขอโอกาสหน่อย", 
+            "ไม่รักเค้าหรอ?", 
+            "เสียใจนะเนี่ย", 
+            "ฮือออออ T_T", 
+            "อย่าใจร้ายนักเลย", 
+            "เค้าเลี้ยงข้าวเลยเอ้า", 
+            "เลี้ยงชาบูด้วย!", 
+            "พาไปเที่ยวด้วยนะ", 
+            "น่านะ... นะคะ", 
+            "พลีสสสสสส", 
+            "จะไม่ตกลงจริงๆ หรอ", 
+            "เค้าจะเป็นเด็กดี", 
+            "สัญญาจะไม่ดื้อ", 
+            "กราบล่ะ", 
+            "หัวใจจะวายแล้ว", 
+            "แงงงงงงง", 
+            "ยัง.. ยังไม่กดอีก", 
+            "ปุ่มตกลงใหญ่ขนาดนี้แล้ว", 
+            "กดเถอะ ขอร้อง", 
+            "มือลั่นกดตกลงก็ได้", 
+            "ไม่เหนื่อยหรอ?", 
+            "เค้าเหนื่อยแล้วนะ", 
+            "จะร้องไห้จริงๆ แล้วนะ", 
+            "ผ้าเช็ดหน้าต้องเข้าแล้ว", 
+            "โอเค ยอมก็ได้...", 
+            "ล้อเล่น! ไม่ยอมหรอก", 
+            "กดตกลงเดี๋ยวนี้!", 
+            "ไม่มีทางเลือกแล้วนะ", 
+            "เลิกแกล้งได้แล้ว", 
+            "ปุ่มมันบังจอหมดแล้ว!", 
+            "ยอมเป็นแฟนเค้าเถอะ", 
+            "รักนะจุ๊บๆ",
+            "กดปุ่มสีชมพูสิ", 
+            "อย่ากดปุ่มนี้!", 
+            "ดื้อจังเลยยย", 
+            "แฟนครับ/ค่ะ กดตกลงเถอะ"
+        ];
+
+        function showPage2() {
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+        }
+
+        function showPage3() {
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+        }
+
+        function growYes() {
+            // ขยายปุ่ม Yes ทีละนิด (ปรับให้น้อยลงนิดนึงจะได้กดเล่นได้นานๆ)
+            yesSize += 0.4; 
+            let yesBtn = document.getElementById("yesBtn");
+            yesBtn.style.fontSize = yesSize + "rem";
+            yesBtn.style.padding = (yesSize * 10) + "px " + (yesSize * 20) + "px"; 
+
+            // เปลี่ยนข้อความปุ่ม No
+            clickCount++;
+            let noBtn = document.getElementById("noBtn");
+            
+            if (clickCount < noTexts.length) {
+                noBtn.innerText = noTexts[clickCount];
+            } else {
+                // ถ้าคำหมดแล้ว วนลูปคำสุดท้าย
+                noBtn.innerText = noTexts[noTexts.length - 1];
+                // หรือจะสุ่มคำเอาก็ได้: noBtn.innerText = noTexts[Math.floor(Math.random() * noTexts.length)];
+            }
+        }
+    </script>
+
+</body>
+</html>
